@@ -34,7 +34,11 @@ export default async function Home() {
         {confirmedBookings.length > 0 && (
           <PageSectionContent>
             <PageSectionTitle>Agendamentos</PageSectionTitle>
-            <BookingItem booking={confirmedBookings[0]} />
+            <PageSectionScroller>
+              {confirmedBookings.map((booking) => (
+                <BookingItem key={booking.id} booking={booking} />
+              ))}
+            </PageSectionScroller>
           </PageSectionContent>
         )}
         <PageSectionContent>
