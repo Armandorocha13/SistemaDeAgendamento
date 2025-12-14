@@ -31,3 +31,14 @@ Tecnologias utilizadas:
 - SEMPRE use rem para medidas e nunca px.
 - SEMPRE use a biblioteca "lucide-react" para renderizar ícones.
 - Antes de inserir o footer, veja os arquivos layout.tsx, se ele já não está sendo renderizado.
+- SEMPRE corrija os erros de ESLint.
+- NUNCA crie manualmente o botão de fechar do Sheet. Ele já vem automaticamente no Sheet.
+
+## Server Actions
+
+- **SEMPRE** use a biblioteca "next-safe-action" para criar Server Actions.
+- **SEMPRE** Use o hook "useAction" da biblioteca "next-safe-action" para chamar uma Server Action.
+- **SEMPRE** use a Server Action @actions/create-booking.ts como base para criar as suas.
+- **SEMPRE** faça validações de autorização e autenticação em uma Server Action conforme o usuário.
+- **SEMPRE** use o `protectedActionClient` em actions protegidas (veja @lib/action-client.ts).
+- **SEMPRE** crie as server actions na pasta @actions.
