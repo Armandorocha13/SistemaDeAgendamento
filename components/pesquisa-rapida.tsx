@@ -3,13 +3,14 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, FormEvent } from "react";
-import { PageSectionScroller } from "./ui/page";
+import { RolagemSecao } from "./ui/page";
 import { Scissors, Sparkles, User, Eye, Footprints, Waves } from "lucide-react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { SearchIcon } from "lucide-react";
 
-const QuickSearch = () => {
+// Componente de pesquisa rápida
+const PesquisaRapida = () => {
   const router = useRouter();
   const [searchValue, setSearchValue] = useState("");
 
@@ -32,7 +33,7 @@ const QuickSearch = () => {
           <SearchIcon />
         </Button>
       </form>
-      <PageSectionScroller>
+      <RolagemSecao>
         <Link
           href="/barbershops?search=cabelo"
           className="border-border bg-card-background flex shrink-0 items-center justify-center gap-3 rounded-3xl border px-4 py-2"
@@ -92,9 +93,9 @@ const QuickSearch = () => {
             Progressiva
           </span>
         </Link>
-      </PageSectionScroller>
+      </RolagemSecao>
     </>
   );
 };
 
-export default QuickSearch;
+export default PesquisaRapida;

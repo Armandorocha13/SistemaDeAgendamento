@@ -1,8 +1,10 @@
-export const PageContainer = ({ children }: { children: React.ReactNode }) => {
+// Container da página
+export const ContainerPagina = ({ children }: { children: React.ReactNode }) => {
   return <div className="space-y-6 p-5">{children}</div>;
 };
 
-export const PageSectionTitle = ({
+// Título de seção
+export const TituloSecao = ({
   children,
 }: {
   children: React.ReactNode;
@@ -10,7 +12,8 @@ export const PageSectionTitle = ({
   return <h3 className="text-xs font-bold uppercase">{children}</h3>;
 };
 
-export const PageSectionContent = ({
+// Conteúdo da seção
+export const ConteudoSecao = ({
   children,
 }: {
   children: React.ReactNode;
@@ -18,7 +21,8 @@ export const PageSectionContent = ({
   return <div className="space-y-3">{children}</div>;
 };
 
-export const PageSectionScroller = ({
+// Rolagem horizontal da seção
+export const RolagemSecao = ({
   children,
 }: {
   children: React.ReactNode;

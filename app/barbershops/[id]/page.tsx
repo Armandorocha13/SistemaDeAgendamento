@@ -1,16 +1,16 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Smartphone } from "lucide-react";
-import { getBarbershopById } from "@/data/barbershops";
-import { PageSectionTitle } from "@/components/ui/page";
-import Footer from "@/components/footer";
-import ServiceItem from "@/components/service-item";
+import { obterBarbeariaPorId } from "@/data/barbearias";
+import { TituloSecao } from "@/components/ui/page";
+import Rodape from "@/components/rodape";
+import ItemServico from "@/components/item-servico";
 import BackButton from "./_components/back-button";
 import CopyButton from "./_components/copy-button";
 
 const BarbershopPage = async ({ params }: PageProps<"/barbershops/[id]">) => {
   const { id } = await params;
-  const barbershop = await getBarbershopById(id);
+  const barbershop = await obterBarbeariaPorId(id);
 
   if (!barbershop) {
     notFound();
@@ -54,7 +54,7 @@ const BarbershopPage = async ({ params }: PageProps<"/barbershops/[id]">) => {
 
         {/* Sobre Nós */}
         <div className="flex flex-col gap-3 px-5">
-          <PageSectionTitle>Sobre Nós</PageSectionTitle>
+          <TituloSecao>Sobre Nós</TituloSecao>
           <p className="text-sm">{barbershop.description}</p>
         </div>
 
@@ -65,10 +65,10 @@ const BarbershopPage = async ({ params }: PageProps<"/barbershops/[id]">) => {
 
         {/* Serviços */}
         <div className="flex flex-col gap-3 px-5">
-          <PageSectionTitle>Serviços</PageSectionTitle>
+          <TituloSecao>Serviços</TituloSecao>
           <div className="flex flex-col gap-3">
             {barbershop.services.map((service) => (
-              <ServiceItem
+              <ItemServico
                 key={service.id}
                 service={service}
                 barbershop={barbershop}
@@ -84,7 +84,7 @@ const BarbershopPage = async ({ params }: PageProps<"/barbershops/[id]">) => {
 
         {/* Contato */}
         <div className="flex flex-col gap-3 px-5">
-          <PageSectionTitle>Contato</PageSectionTitle>
+          <TituloSecao>Contato</TituloSecao>
           {barbershop.phones.map((phone, index) => (
             <div key={index} className="flex items-center justify-between">
               <div className="flex items-center gap-2.5">
@@ -99,7 +99,7 @@ const BarbershopPage = async ({ params }: PageProps<"/barbershops/[id]">) => {
         {/* Footer spacing */}
         <div className="pt-[60px]" />
       </div>
-      <Footer />
+      <Rodape />
     </div>
   );
 };

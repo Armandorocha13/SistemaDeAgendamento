@@ -1,11 +1,11 @@
-import Header from "@/components/header";
-import Footer from "@/components/footer";
-import BarbershopItem from "@/components/barbershop-item";
-import { getBarbershopsByServiceName } from "@/data/barbershops";
+import Cabecalho from "@/components/cabecalho";
+import Rodape from "@/components/rodape";
+import ItemBarbearia from "@/components/item-barbearia";
+import { obterBarbeariasPorNomeServico } from "@/data/barbearias";
 import {
-  PageContainer,
-  PageSectionContent,
-  PageSectionTitle,
+  ContainerPagina,
+  ConteudoSecao,
+  TituloSecao,
 } from "@/components/ui/page";
 
 interface BarbershopsPageProps {
@@ -16,30 +16,28 @@ interface BarbershopsPageProps {
 
 const BarbershopsPage = async ({ searchParams }: BarbershopsPageProps) => {
   const { search } = await searchParams;
-  const barbershops = search ? await getBarbershopsByServiceName(search) : [];
+  const barbearias = search ? await obterBarbeariasPorNomeServico(search) : [];
 
   return (
     <div>
-      <Header />
-      <PageContainer>
-        <PageSectionContent>
-          <PageSectionTitle>
-            Resultados para &quot;{search || ""}&quot;
-          </PageSectionTitle>
-          {barbershops.length === 0 ? (
+      <Cabecalho />
+      <ContainerPagina>
+        <ConteudoSecao>
+          <TituloSecao>Resultados para &quot;{search || ""}&quot;</TituloSecao>
+          {barbearias.length === 0 ? (
             <p className="text-muted-foreground text-sm">
               Nenhuma barbearia encontrada.
             </p>
           ) : (
             <div className="grid grid-cols-1 gap-4">
-              {barbershops.map((barbershop) => (
-                <BarbershopItem key={barbershop.id} barbershop={barbershop} />
+              {barbearias.map((barbershop) => (
+                <ItemBarbearia key={barbershop.id} barbershop={barbershop} />
               ))}
             </div>
           )}
-        </PageSectionContent>
-      </PageContainer>
-      <Footer />
+        </ConteudoSecao>
+      </ContainerPagina>
+      <Rodape />
     </div>
   );
 };

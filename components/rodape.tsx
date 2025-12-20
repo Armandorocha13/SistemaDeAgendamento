@@ -1,4 +1,5 @@
-const Footer = () => {
+// Rodapé da aplicação
+const Rodape = () => {
   return (
     <footer className="bg-muted p-7">
       <p className="text-foreground text-xs font-semibold">
@@ -11,4 +12,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default Rodape;

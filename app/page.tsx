@@ -1,30 +1,30 @@
-import Header from "@/components/header";
+import Cabecalho from "@/components/cabecalho";
 import Image from "next/image";
 import banner from "@/public/banner.png";
-import BookingItem from "@/components/booking-item";
+import ItemAgendamento from "@/components/item-agendamento";
 
-import { getBarbershops, getPopularBarbershops } from "@/data/barbershops";
-import { getUserBookings } from "@/data/bookings";
-import BarbershopItem from "@/components/barbershop-item";
+import { obterBarbearias, obterBarbeariasPopulares } from "@/data/barbearias";
+import { obterAgendamentosUsuario } from "@/data/agendamentos";
+import ItemBarbearia from "@/components/item-barbearia";
 import {
-  PageContainer,
-  PageSectionContent,
-  PageSectionScroller,
-  PageSectionTitle,
+  ContainerPagina,
+  ConteudoSecao,
+  RolagemSecao,
+  TituloSecao,
 } from "@/components/ui/page";
-import Footer from "@/components/footer";
-import QuickSearch from "@/components/quick-search";
+import Rodape from "@/components/rodape";
+import PesquisaRapida from "@/components/pesquisa-rapida";
 
 export default async function Home() {
-  const barbershops = await getBarbershops();
-  const popularBarbershops = await getPopularBarbershops();
-  const { confirmedBookings } = await getUserBookings();
+  const barbearias = await obterBarbearias();
+  const barbeariasPopulares = await obterBarbeariasPopulares();
+  const { confirmedBookings } = await obterAgendamentosUsuario();
 
   return (
     <div>
-      <Header />
-      <PageContainer>
-        <QuickSearch />
+      <Cabecalho />
+      <ContainerPagina>
+        <PesquisaRapida />
         <Image
           src={banner}
           alt="Agende nos melhores com a Aparatus"
@@ -32,33 +32,33 @@ export default async function Home() {
           className="h-auto w-full"
         />
         {confirmedBookings.length > 0 && (
-          <PageSectionContent>
-            <PageSectionTitle>Agendamentos</PageSectionTitle>
-            <PageSectionScroller>
+          <ConteudoSecao>
+            <TituloSecao>Agendamentos</TituloSecao>
+            <RolagemSecao>
               {confirmedBookings.map((booking) => (
-                <BookingItem key={booking.id} booking={booking} />
+                <ItemAgendamento key={booking.id} booking={booking} />
               ))}
-            </PageSectionScroller>
-          </PageSectionContent>
+            </RolagemSecao>
+          </ConteudoSecao>
         )}
-        <PageSectionContent>
-          <PageSectionTitle>Barbearias</PageSectionTitle>
-          <PageSectionScroller>
-            {barbershops.map((barbershop) => (
-              <BarbershopItem key={barbershop.id} barbershop={barbershop} />
+        <ConteudoSecao>
+          <TituloSecao>Barbearias</TituloSecao>
+          <RolagemSecao>
+            {barbearias.map((barbershop) => (
+              <ItemBarbearia key={barbershop.id} barbershop={barbershop} />
             ))}
-          </PageSectionScroller>
-        </PageSectionContent>
-        <PageSectionContent>
-          <PageSectionTitle>Barbearias populares</PageSectionTitle>
-          <PageSectionScroller>
-            {popularBarbershops.map((barbershop) => (
-              <BarbershopItem key={barbershop.id} barbershop={barbershop} />
+          </RolagemSecao>
+        </ConteudoSecao>
+        <ConteudoSecao>
+          <TituloSecao>Barbearias populares</TituloSecao>
+          <RolagemSecao>
+            {barbeariasPopulares.map((barbershop) => (
+              <ItemBarbearia key={barbershop.id} barbershop={barbershop} />
             ))}
-          </PageSectionScroller>
-        </PageSectionContent>
-      </PageContainer>
-      <Footer />
+          </RolagemSecao>
+        </ConteudoSecao>
+      </ContainerPagina>
+      <Rodape />
     </div>
   );
 }

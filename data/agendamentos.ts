@@ -3,11 +3,13 @@ import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { Prisma } from "@/generated/prisma/client";
 
+// Tipo auxiliar de agendamento com relações carregadas
 export type BookingWithRelations = Prisma.BookingGetPayload<{
   include: { barbershop: true; service: true };
 }>;
 
-export const getUserBookings = async () => {
+// Obtém agendamentos do usuário autenticado
+export const obterAgendamentosUsuario = async () => {
   const session = await auth.api.getSession({
     headers: await headers(),
   });

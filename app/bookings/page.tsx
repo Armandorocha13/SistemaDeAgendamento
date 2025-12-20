@@ -1,28 +1,28 @@
-import Header from "@/components/header";
-import Footer from "@/components/footer";
-import BookingItem from "@/components/booking-item";
-import { getUserBookings } from "@/data/bookings";
+import Cabecalho from "@/components/cabecalho";
+import Rodape from "@/components/rodape";
+import ItemAgendamento from "@/components/item-agendamento";
+import { obterAgendamentosUsuario } from "@/data/agendamentos";
 import {
-  PageContainer,
-  PageSectionContent,
-  PageSectionTitle,
+  ContainerPagina,
+  ConteudoSecao,
+  TituloSecao,
 } from "@/components/ui/page";
 
 const BookingsPage = async () => {
-  const { confirmedBookings, finishedBookings } = await getUserBookings();
+  const { confirmedBookings, finishedBookings } = await obterAgendamentosUsuario();
 
   return (
     <div>
-      <Header />
-      <PageContainer>
+      <Cabecalho />
+      <ContainerPagina>
         <h1 className="text-xl font-bold">Agendamentos</h1>
 
-        <PageSectionContent>
-          <PageSectionTitle>Confirmados</PageSectionTitle>
+        <ConteudoSecao>
+          <TituloSecao>Confirmados</TituloSecao>
           {confirmedBookings.length > 0 ? (
             <div className="flex flex-col gap-3">
               {confirmedBookings.map((booking) => (
-                <BookingItem key={booking.id} booking={booking} />
+                <ItemAgendamento key={booking.id} booking={booking} />
               ))}
             </div>
           ) : (
@@ -30,14 +30,14 @@ const BookingsPage = async () => {
               Nenhum agendamento confirmado.
             </p>
           )}
-        </PageSectionContent>
+        </ConteudoSecao>
 
-        <PageSectionContent>
-          <PageSectionTitle>Finalizados</PageSectionTitle>
+        <ConteudoSecao>
+          <TituloSecao>Finalizados</TituloSecao>
           {finishedBookings.length > 0 ? (
             <div className="flex flex-col gap-3">
               {finishedBookings.map((booking) => (
-                <BookingItem key={booking.id} booking={booking} />
+                <ItemAgendamento key={booking.id} booking={booking} />
               ))}
             </div>
           ) : (
@@ -45,9 +45,9 @@ const BookingsPage = async () => {
               Nenhum agendamento finalizado.
             </p>
           )}
-        </PageSectionContent>
-      </PageContainer>
-      <Footer />
+        </ConteudoSecao>
+      </ContainerPagina>
+      <Rodape />
     </div>
   );
 };

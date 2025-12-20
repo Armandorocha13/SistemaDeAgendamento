@@ -1,9 +1,10 @@
 import { Card, CardContent } from "./ui/card";
-import { formatCurrency } from "@/lib/utils";
+import { formatarMoeda } from "@/lib/utils";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
-interface BookingSummaryProps {
+// Resumo do agendamento selecionado
+interface ResumoAgendamentoProps {
   serviceName: string;
   servicePrice: number;
   barbershopName: string;
@@ -11,13 +12,13 @@ interface BookingSummaryProps {
   time?: string;
 }
 
-const BookingSummary = ({
+const ResumoAgendamento = ({
   serviceName,
   servicePrice,
   barbershopName,
   date,
   time,
-}: BookingSummaryProps) => {
+}: ResumoAgendamentoProps) => {
   const formattedTime = time ?? format(date, "HH:mm");
 
   return (
@@ -25,7 +26,7 @@ const BookingSummary = ({
       <CardContent className="flex flex-col gap-3">
         <div className="flex items-center justify-between">
           <p className="font-bold">{serviceName}</p>
-          <p className="text-sm font-bold">{formatCurrency(servicePrice)}</p>
+          <p className="text-sm font-bold">{formatarMoeda(servicePrice)}</p>
         </div>
 
         <div className="flex items-center justify-between">
@@ -49,4 +50,4 @@ const BookingSummary = ({
   );
 };
 
-export default BookingSummary;
+export default ResumoAgendamento;

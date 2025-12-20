@@ -15,9 +15,9 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "./ui/alert-dialog";
-import { BookingWithRelations } from "@/data/bookings";
+import { BookingWithRelations } from "@/data/agendamentos";
 import { getBookingStatus } from "@/lib/booking-status";
-import BookingSummary from "./booking-summary";
+import ResumoAgendamento from "./resumo-agendamento";
 import CopyButton from "@/app/barbershops/[id]/_components/copy-button";
 import { Avatar, AvatarImage } from "./ui/avatar";
 import { Smartphone, X, Loader2 } from "lucide-react";
@@ -87,7 +87,7 @@ const BookingInfoSheet = ({ booking, onClose }: BookingInfoSheetProps) => {
             </Badge>
           )}
 
-          <BookingSummary
+          <ResumoAgendamento
             serviceName={booking.service.name}
             servicePrice={booking.service.priceInCents}
             barbershopName={booking.barbershop.name}

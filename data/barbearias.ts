@@ -1,12 +1,14 @@
 // Data Access Layer
 import { prisma } from "@/lib/prisma";
 
-export const getBarbershops = async () => {
+// Obtém todas as barbearias
+export const obterBarbearias = async () => {
   const barbershops = await prisma.barbershop.findMany();
   return barbershops;
 };
 
-export const getPopularBarbershops = async () => {
+// Obtém barbearias populares
+export const obterBarbeariasPopulares = async () => {
   const popularBarbershops = await prisma.barbershop.findMany({
     orderBy: {
       name: "desc",
@@ -15,7 +17,8 @@ export const getPopularBarbershops = async () => {
   return popularBarbershops;
 };
 
-export const getBarbershopById = async (id: string) => {
+// Obtém barbearia por ID
+export const obterBarbeariaPorId = async (id: string) => {
   const barbershop = await prisma.barbershop.findUnique({
     where: { id },
     include: { services: true },
@@ -23,7 +26,8 @@ export const getBarbershopById = async (id: string) => {
   return barbershop;
 };
 
-export const getBarbershopsByServiceName = async (serviceName: string) => {
+// Obtém barbearias pelo nome do serviço
+export const obterBarbeariasPorNomeServico = async (serviceName: string) => {
   const barbershops = await prisma.barbershop.findMany({
     where: {
       services: {

@@ -2,11 +2,12 @@ import { Barbershop } from "@/generated/prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 
-interface BarbershopItemProps {
+// Card de barbearia usado em listagens
+interface ItemBarbeariaProps {
   barbershop: Barbershop;
 }
 
-const BarbershopItem = ({ barbershop }: BarbershopItemProps) => {
+const ItemBarbearia = ({ barbershop }: ItemBarbeariaProps) => {
   return (
     <Link
       href={`/barbershops/${barbershop.id}`}
@@ -27,4 +28,4 @@ const BarbershopItem = ({ barbershop }: BarbershopItemProps) => {
   );
 };
 
-export default BarbershopItem;
+export default ItemBarbearia;

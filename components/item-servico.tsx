@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { Button } from "./ui/button";
-import { formatCurrency } from "@/lib/utils";
+import { formatarMoeda } from "@/lib/utils";
 import { BarbershopService, Barbershop } from "@/generated/prisma/client";
 import {
   Sheet,
@@ -19,16 +19,17 @@ import { useAction } from "next-safe-action/hooks";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { useGetDateAvailableTimeSlots } from "@/hooks/data/use-get-date-availabe-time-slots";
-import BookingSummary from "./booking-summary";
+import ResumoAgendamento from "./resumo-agendamento";
 import { createBookingCheckoutSession } from "@/actions/create-booking-checkout-session";
 import { loadStripe } from "@stripe/stripe-js";
 
-interface ServiceItemProps {
+// Card de serviço com fluxo de reserva
+interface ItemServicoProps {
   service: BarbershopService;
   barbershop: Barbershop;
 }
 
-const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
+const ItemServico = ({ service, barbershop }: ItemServicoProps) => {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [selectedTime, setSelectedTime] = useState<string | undefined>(
     undefined,
@@ -120,7 +121,7 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
         {/* Price and Booking Button */}
         <div className="flex items-center justify-between">
           <p className="text-sm font-bold">
-            {formatCurrency(service.priceInCents)}
+            {formatarMoeda(service.priceInCents)}
           </p>
 
           <Sheet open={sheetIsOpen} onOpenChange={setSheetIsOpen}>
@@ -176,10 +177,10 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                 </div>
               )}
 
-              {/* Booking Summary */}
+              {/* Resumo da Reserva */}
               {selectedDate && selectedTime && (
                 <div className="px-5 py-6">
-                  <BookingSummary
+                  <ResumoAgendamento
                     serviceName={service.name}
                     servicePrice={service.priceInCents}
                     barbershopName={barbershop.name}
@@ -210,4 +211,4 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
   );
 };
 
-export default ServiceItem;
+export default ItemServico;

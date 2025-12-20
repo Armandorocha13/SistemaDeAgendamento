@@ -5,17 +5,18 @@ import { Avatar, AvatarImage } from "./ui/avatar";
 import { Badge } from "./ui/badge";
 import { Card } from "./ui/card";
 import { Sheet, SheetTrigger } from "./ui/sheet";
-import { BookingWithRelations } from "@/data/bookings";
+import { BookingWithRelations } from "@/data/agendamentos";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { getBookingStatus } from "@/lib/booking-status";
-import BookingInfoSheet from "./booking-info-sheet";
+import PainelInfoAgendamento from "./painel-info-agendamento";
 
-interface BookingItemProps {
+// Item de agendamento exibido em listas
+interface ItemAgendamentoProps {
   booking: BookingWithRelations;
 }
 
-const BookingItem = ({ booking }: BookingItemProps) => {
+const ItemAgendamento = ({ booking }: ItemAgendamentoProps) => {
   const [sheetIsOpen, setSheetIsOpen] = useState(false);
   const status = getBookingStatus(booking.date, booking.cancelledAt);
 
@@ -52,7 +53,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
         </Card>
       </SheetTrigger>
 
-      <BookingInfoSheet
+      <PainelInfoAgendamento
         booking={booking}
         onClose={() => setSheetIsOpen(false)}
       />
@@ -60,4 +61,4 @@ const BookingItem = ({ booking }: BookingItemProps) => {
   );
 };
 
-export default BookingItem;
+export default ItemAgendamento;

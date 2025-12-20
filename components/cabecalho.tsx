@@ -3,9 +3,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Button } from "./ui/button";
-import MenuSheet from "./menu-sheet";
+import MenuSheet from "./menu";
 
-const Header = () => {
+// Cabeçalho principal da aplicação
+const Cabecalho = () => {
   return (
     <header className="bg-background flex items-center justify-between px-5 py-6">
       <Link href="/">
@@ -23,4 +24,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Cabecalho;
