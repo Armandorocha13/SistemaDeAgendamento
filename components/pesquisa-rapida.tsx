@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, FormEvent } from "react";
 import { RolagemSecao } from "./ui/page";
-import { Scissors, Sparkles, User, Eye, Footprints, Waves } from "lucide-react";
+import { Sparkles, Hand, Paintbrush, Droplets } from "lucide-react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { SearchIcon } from "lucide-react";
@@ -35,62 +35,42 @@ const PesquisaRapida = () => {
       </form>
       <RolagemSecao>
         <Link
-          href="/barbershops?search=cabelo"
+          href="/barbershops?search=manutenção%20de%20gel"
           className="border-border bg-card-background flex shrink-0 items-center justify-center gap-3 rounded-3xl border px-4 py-2"
         >
-          <Scissors className="size-4" />
+          <Hand className="size-4" />
           <span className="text-card-foreground text-sm font-medium">
-            Cabelo
+            Manutenção de Gel
           </span>
         </Link>
 
         <Link
-          href="/barbershops?search=barba"
+          href="/barbershops?search=esmaltação%20em%20gel"
           className="border-border bg-card-background flex shrink-0 items-center justify-center gap-3 rounded-3xl border px-4 py-2"
         >
-          <User className="size-4" />
+          <Paintbrush className="size-4" />
           <span className="text-card-foreground text-sm font-medium">
-            Barba
+            Esmaltação em Gel
           </span>
         </Link>
 
         <Link
-          href="/barbershops?search=acabamento"
+          href="/barbershops?search=banho%20de%20gel"
+          className="border-border bg-card-background flex shrink-0 items-center justify-center gap-3 rounded-3xl border px-4 py-2"
+        >
+          <Droplets className="size-4" />
+          <span className="text-card-foreground text-sm font-medium">
+            Banho de Gel
+          </span>
+        </Link>
+
+        <Link
+          href="/barbershops?search=cuticulagem"
           className="border-border bg-card-background flex shrink-0 items-center justify-center gap-3 rounded-3xl border px-4 py-2"
         >
           <Sparkles className="size-4" />
           <span className="text-card-foreground text-sm font-medium">
-            Acabamento
-          </span>
-        </Link>
-
-        <Link
-          href="/barbershops?search=sobrancelha"
-          className="border-border bg-card-background flex shrink-0 items-center justify-center gap-3 rounded-3xl border px-4 py-2"
-        >
-          <Eye className="size-4" />
-          <span className="text-card-foreground text-sm font-medium">
-            Sobrancelha
-          </span>
-        </Link>
-
-        <Link
-          href="/barbershops?search=pézinho"
-          className="border-border bg-card-background flex shrink-0 items-center justify-center gap-3 rounded-3xl border px-4 py-2"
-        >
-          <Footprints className="size-4" />
-          <span className="text-card-foreground text-sm font-medium">
-            Pézinho
-          </span>
-        </Link>
-
-        <Link
-          href="/barbershops?search=progressiva"
-          className="border-border bg-card-background flex shrink-0 items-center justify-center gap-3 rounded-3xl border px-4 py-2"
-        >
-          <Waves className="size-4" />
-          <span className="text-card-foreground text-sm font-medium">
-            Progressiva
+            Cuticulagem
           </span>
         </Link>
       </RolagemSecao>

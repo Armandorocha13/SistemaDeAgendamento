@@ -42,7 +42,7 @@ export default async function Home() {
           </ConteudoSecao>
         )}
         <ConteudoSecao>
-          <TituloSecao>Barbearias</TituloSecao>
+          <TituloSecao>Nail Designers</TituloSecao>
           <RolagemSecao>
             {barbearias.map((barbershop) => (
               <ItemBarbearia key={barbershop.id} barbershop={barbershop} />
@@ -50,7 +50,7 @@ export default async function Home() {
           </RolagemSecao>
         </ConteudoSecao>
         <ConteudoSecao>
-          <TituloSecao>Barbearias populares</TituloSecao>
+          <TituloSecao>Nail Designers populares</TituloSecao>
           <RolagemSecao>
             {barbeariasPopulares.map((barbershop) => (
               <ItemBarbearia key={barbershop.id} barbershop={barbershop} />

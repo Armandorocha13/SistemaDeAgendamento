@@ -23,7 +23,9 @@ const BarbershopsPage = async ({ searchParams }: BarbershopsPageProps) => {
       <Cabecalho />
       <ContainerPagina>
         <ConteudoSecao>
-          <TituloSecao>Resultados para &quot;{search || ""}&quot;</TituloSecao>
+          <TituloSecao>
+            Resultados de Nail Design para &quot;{search || ""}&quot;
+          </TituloSecao>
           {barbearias.length === 0 ? (
             <p className="text-muted-foreground text-sm">
               Nenhuma barbearia encontrada.

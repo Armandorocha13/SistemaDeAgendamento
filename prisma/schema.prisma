@@ -30,6 +30,7 @@ model BarbershopService {
   description  String
   imageUrl     String
   priceInCents Int
+  durationInMinutes Int   @default(60)
   barbershopId String
   barbershop   Barbershop @relation(fields: [barbershopId], references: [id], onDelete: Cascade)
   bookings     Booking[]
@@ -57,6 +58,7 @@ model User {
   email         String
   emailVerified Boolean   @default(false)
   image         String?
+  profession    String?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   sessions      Session[]

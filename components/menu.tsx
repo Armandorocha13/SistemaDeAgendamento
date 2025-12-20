@@ -18,12 +18,12 @@ import { toast } from "sonner";
 const isLoggedIn = false;
 
 const categories = [
-  { label: "Cabelo", search: "cabelo" },
-  { label: "Barba", search: "barba" },
-  { label: "Acabamento", search: "acabamento" },
-  { label: "Sobrancelha", search: "sobrancelha" },
-  { label: "Massagem", search: "massagem" },
-  { label: "Hidratacao", search: "hidratacao" },
+  { label: "Manutenção de Gel", search: "manutenção de gel" },
+  { label: "Esmaltação em Gel", search: "esmaltação em gel" },
+  { label: "Banho de Gel", search: "banho de gel" },
+  { label: "Cuticulagem", search: "cuticulagem" },
+  { label: "Spa das Mãos", search: "spa das mãos" },
+  { label: "Blindagem", search: "blindagem" },
 ];
 
 const MenuSheet = () => {

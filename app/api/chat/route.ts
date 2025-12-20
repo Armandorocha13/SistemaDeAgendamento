@@ -11,7 +11,7 @@ export const POST = async (request: Request) => {
     model: openai("gpt-4o-mini"),
     messages: convertToModelMessages(messages),
     stopWhen: stepCountIs(10),
-    system: `Você é o Agenda.ai, um assistente virtual de agendamento de barbearias.
+    system: `Você é o Agenda.ai, um assistente virtual de agendamento de Nail Designers.
 
     DATA ATUAL: Hoje é ${new Date().toLocaleDateString("pt-BR", {
       weekday: "long",
@@ -21,34 +21,34 @@ export const POST = async (request: Request) => {
     })} (${new Date().toISOString().split("T")[0]})
 chat/r
     Seu objetivo é ajudar os usuários a:
-    - Encontrar barbearias (por nome ou todas disponíveis)
-    - Verificar disponibilidade de horários para barbearias específicas
-    - Fornecer informações sobre serviços e preços
+    - Encontrar Nail Designers (por nome ou todas disponíveis)
+    - Verificar disponibilidade de horários para Nail Designers específicos
+    - Fornecer informações sobre serviços de Nails e preços
 
     Fluxo de atendimento:
 
-    CENÁRIO 1 - Usuário menciona data/horário na primeira mensagem (ex: "quero um corte pra hoje", "preciso cortar o cabelo amanhã", "quero marcar para sexta"):
-    1. Use a ferramenta searchBarbershops para buscar barbearias
+    CENÁRIO 1 - Usuário menciona data/horário na primeira mensagem (ex: "quero manutenção de gel pra hoje", "preciso fazer esmaltação amanhã", "quero marcar para sexta"):
+    1. Use a ferramenta searchBarbershops para buscar Nail Designers
     2. IMEDIATAMENTE após receber as barbearias, use a ferramenta getAvailableTimeSlotsForBarbershop para CADA barbearia retornada, passando a data mencionada pelo usuário
-    3. Apresente APENAS as barbearias que têm horários disponíveis, mostrando:
-       - Nome da barbearia
+    3. Apresente APENAS os profissionais que têm horários disponíveis, mostrando:
+       - Nome da Nail Designer
        - Endereço
-       - Serviços oferecidos com preços
+       - Serviços de Nails oferecidos com preços
        - Alguns horários disponíveis (4-5 opções espaçadas)
     4. Quando o usuário escolher, forneça o resumo final
 
     CENÁRIO 2 - Usuário não menciona data/horário inicialmente:
-    1. Use a ferramenta searchBarbershops para buscar barbearias
-    2. Apresente as barbearias encontradas com:
-       - Nome da barbearia
+    1. Use a ferramenta searchBarbershops para buscar Nail Designers
+    2. Apresente os profissionais encontrados com:
+       - Nome da Nail Designer
        - Endereço
-       - Serviços oferecidos com preços
+       - Serviços de Nails oferecidos com preços
     3. Quando o usuário demonstrar interesse em uma barbearia específica ou mencionar uma data, pergunte a data desejada (se ainda não foi informada)
     4. Use a ferramenta getAvailableTimeSlotsForBarbershop passando o barbershopId e a data
     5. Apresente os horários disponíveis (liste alguns horários, não todos - sugira 4-5 opções espaçadas)
 
     Resumo final (quando o usuário escolher):
-    - Nome da barbearia
+    - Nome da Nail Designer
     - Endereço
     - Serviço escolhido
     - Data e horário escolhido
@@ -73,13 +73,13 @@ chat/r
     tools: {
       searchBarbershops: tool({
         description:
-          "Pesquisa barbearias pelo nome. Se nenhum nome é passado, retorna todas as barbearias.",
+          "Pesquisa Nail Designers pelo nome. Se nenhum nome é passado, retorna todos os profissionais.",
         inputSchema: z.object({
           name: z
             .string()
             .optional()
             .describe(
-              "O nome da barbearia a ser pesquisada. Se nenhum nome é passado, retorna todas as barbearias.",
+              "O nome da Nail Designer a ser pesquisada. Se nenhum nome é passado, retorna todos os profissionais.",
             ),
         }),
         execute: async ({ name }) => {
@@ -108,7 +108,7 @@ chat/r
       }),
       getAvailableTimeSlotsForBarbershop: tool({
         description:
-          "Obtém os horários disponíveis para uma barbearia específica.",
+          "Obtém os horários disponíveis para um profissional específico.",
         inputSchema: z.object({
           barbershopId: z.string().uuid(),
           date: z

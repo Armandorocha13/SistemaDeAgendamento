@@ -6,7 +6,7 @@ const Rodape = () => {
         &copy; 2025 Aparatus
       </p>
       <p className="text-muted-foreground text-xs">
-        Todos os direitos reservados.
+        Todos os direitos reservados a AeroCode
       </p>
     </footer>
   );

@@ -24,6 +24,9 @@ export const createBooking = protectedActionClient
       where: {
         id: serviceId,
       },
+      include: {
+        barbershop: true,
+      },
     });
     // Serviço existe?
     if (!service) {
@@ -33,15 +36,48 @@ export const createBooking = protectedActionClient
         ],
       });
     }
-    // Já tem agendamento pra esse horário?
-    const existingBooking = await prisma.booking.findFirst({
+    // Verificar conflito por intervalo (considerando duração do serviço)
+    const candidateStart = date;
+    const candidateEnd = new Date(
+      candidateStart.getTime() +
+        ((service.durationInMinutes ?? 60) * 60 * 1000),
+    );
+    const sameDayBookings = await prisma.booking.findMany({
       where: {
         barbershopId: service.barbershopId,
-        date,
         cancelledAt: null,
+        date: {
+          gte: new Date(
+            candidateStart.getFullYear(),
+            candidateStart.getMonth(),
+            candidateStart.getDate(),
+            0,
+            0,
+            0,
+            0,
+          ),
+          lte: new Date(
+            candidateStart.getFullYear(),
+            candidateStart.getMonth(),
+            candidateStart.getDate(),
+            23,
+            59,
+            59,
+            999,
+          ),
+        },
       },
+      include: { service: true },
     });
-    if (existingBooking) {
+    const overlaps = sameDayBookings.some((booking) => {
+      const start = booking.date;
+      const end = new Date(
+        start.getTime() +
+          ((booking.service?.durationInMinutes ?? 60) * 60 * 1000),
+      );
+      return candidateStart < end && candidateEnd > start;
+    });
+    if (overlaps) {
       returnValidationErrors(inputSchema, {
         _errors: ["Data e hora selecionadas já estão agendadas."],
       });
@@ -49,7 +85,7 @@ export const createBooking = protectedActionClient
     const booking = await prisma.booking.create({
       data: {
         serviceId,
-        date: date.toISOString(),
+        date,
         userId: user.id,
         barbershopId: service.barbershopId,
       },

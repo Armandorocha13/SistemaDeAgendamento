@@ -8,6 +8,7 @@ import { z } from "zod";
 const inputSchema = z.object({
   barbershopId: z.uuid(),
   date: z.date(),
+  serviceId: z.uuid().optional(),
 });
 
 const TIME_SLOTS = [
@@ -32,7 +33,10 @@ const TIME_SLOTS = [
 
 export const getDateAvailableTimeSlots = actionClient
   .inputSchema(inputSchema)
-  .action(async ({ parsedInput: { barbershopId, date } }) => {
+  .action(async ({ parsedInput: { barbershopId, date, serviceId } }) => {
+    const service = serviceId
+      ? await prisma.barbershopService.findUnique({ where: { id: serviceId } })
+      : null;
     const bookings = await prisma.booking.findMany({
       where: {
         barbershopId,
@@ -43,12 +47,26 @@ export const getDateAvailableTimeSlots = actionClient
         },
         cancelledAt: null,
       },
+      include: {
+        service: true,
+      },
     });
-    const occupiedSlots = bookings.map(
-      (booking) => format(booking.date, "HH:mm"), // [12:00, 14:00]
-    );
-    const availableTimeSlots = TIME_SLOTS.filter(
-      (slot) => !occupiedSlots.includes(slot),
-    );
+    const occupiedIntervals = bookings.map((booking) => {
+      const start = booking.date;
+      const duration = booking.service?.durationInMinutes ?? 60;
+      const end = new Date(start.getTime() + duration * 60 * 1000);
+      return { start, end };
+    });
+    const availableTimeSlots = TIME_SLOTS.filter((slot) => {
+      const [h, m] = slot.split(":").map(Number);
+      const start = new Date(date);
+      start.setHours(h, m, 0, 0);
+      const candidateDuration = service?.durationInMinutes ?? 60;
+      const end = new Date(start.getTime() + candidateDuration * 60 * 1000);
+      const overlaps = occupiedIntervals.some(
+        (interval) => start < interval.end && end > interval.start,
+      );
+      return !overlaps;
+    });
     return availableTimeSlots;
   });
