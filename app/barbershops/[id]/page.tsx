@@ -18,7 +18,7 @@ const BarbershopPage = async ({ params }: PageProps<"/barbershops/[id]">) => {
 
   return (
     <div>
-      {/* Banner Header */}
+      {/* banner Header */}
       <div className="relative h-[297px] w-full">
         <Image
           src={barbershop.imageUrl}
