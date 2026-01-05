@@ -10,11 +10,12 @@ import { isPast } from "date-fns";
 const inputSchema = z.object({
   serviceId: z.uuid(),
   date: z.date(),
+  customerPhone: z.string().min(1, "O número de telefone é obrigatório."),
 });
 
 export const createBooking = protectedActionClient
   .inputSchema(inputSchema)
-  .action(async ({ parsedInput: { serviceId, date }, ctx: { user } }) => {
+  .action(async ({ parsedInput: { serviceId, date, customerPhone }, ctx: { user } }) => {
     if (isPast(date)) {
       returnValidationErrors(inputSchema, {
         _errors: ["Data e hora selecionadas já passaram."],
@@ -40,7 +41,7 @@ export const createBooking = protectedActionClient
     const candidateStart = date;
     const candidateEnd = new Date(
       candidateStart.getTime() +
-        ((service.durationInMinutes ?? 60) * 60 * 1000),
+      ((service.durationInMinutes ?? 60) * 60 * 1000),
     );
     const sameDayBookings = await prisma.booking.findMany({
       where: {
@@ -73,7 +74,7 @@ export const createBooking = protectedActionClient
       const start = booking.date;
       const end = new Date(
         start.getTime() +
-          ((booking.service?.durationInMinutes ?? 60) * 60 * 1000),
+        ((booking.service?.durationInMinutes ?? 60) * 60 * 1000),
       );
       return candidateStart < end && candidateEnd > start;
     });
@@ -88,6 +89,7 @@ export const createBooking = protectedActionClient
         date,
         userId: user.id,
         barbershopId: service.barbershopId,
+        customerPhone,
       },
     });
     return booking;

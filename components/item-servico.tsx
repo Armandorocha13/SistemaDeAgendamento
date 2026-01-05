@@ -20,8 +20,8 @@ import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { useGetDateAvailableTimeSlots } from "@/hooks/data/use-get-date-availabe-time-slots";
 import ResumoAgendamento from "./resumo-agendamento";
-import { createBookingCheckoutSession } from "@/actions/create-booking-checkout-session";
-import { loadStripe } from "@stripe/stripe-js";
+import { createBooking } from "@/actions/create-booking";
+import { Input } from "./ui/input";
 
 // Card de serviço com fluxo de reserva
 interface ItemServicoProps {
@@ -34,9 +34,14 @@ const ItemServico = ({ service, barbershop }: ItemServicoProps) => {
   const [selectedTime, setSelectedTime] = useState<string | undefined>(
     undefined,
   );
+  const [customerPhone, setCustomerPhone] = useState("");
   const [sheetIsOpen, setSheetIsOpen] = useState(false);
+
   const { executeAsync: executeCreateBooking, isPending: isCreatingBooking } =
-    useAction(createBookingCheckoutSession);
+    useAction(createBooking);
+
+  // TODO: Fix this if "BarbershopService" doesn't have "id" in "BarbershopService" type, but it should.
+  // The hook expects params.
   const { data: availableTimeSlots } = useGetDateAvailableTimeSlots({
     barbershopId: barbershop.id,
     serviceId: service.id,
@@ -53,7 +58,7 @@ const ItemServico = ({ service, barbershop }: ItemServicoProps) => {
   };
 
   const handleConfirmBooking = async () => {
-    if (!selectedDate || !selectedTime) {
+    if (!selectedDate || !selectedTime || !customerPhone) {
       return;
     }
     const splittedTime = selectedTime.split(":");
@@ -61,10 +66,14 @@ const ItemServico = ({ service, barbershop }: ItemServicoProps) => {
     const minutes = Number(splittedTime[1]);
     const date = new Date(selectedDate);
     date.setHours(hours, minutes);
+
+    // Passing customerPhone now
     const result = await executeCreateBooking({
       date,
       serviceId: service.id,
+      customerPhone,
     });
+
     if (result.validationErrors) {
       return toast.error(result.validationErrors._errors?.[0]);
     }
@@ -73,31 +82,12 @@ const ItemServico = ({ service, barbershop }: ItemServicoProps) => {
         "Erro ao criar agendamento. Por favor, tente novamente.",
       );
     }
-    const checkoutSession = result.data;
-    if (!checkoutSession) {
-      return toast.error(
-        "Erro ao criar agendamento. Por favor, tente novamente.",
-      );
-    }
-    if (!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY) {
-      return toast.error(
-        "Erro ao criar agendamento. Por favor, tente novamente.",
-      );
-    }
-    const stripe = await loadStripe(
-      process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
-    );
-    if (!stripe) {
-      return toast.error(
-        "Erro ao criar agendamento. Por favor, tente novamente.",
-      );
-    }
-    await stripe.redirectToCheckout({
-      sessionId: checkoutSession.id,
-    });
+
+    toast.success("Reserva realizada com sucesso!");
     setSheetIsOpen(false);
     setSelectedDate(undefined);
     setSelectedTime(undefined);
+    setCustomerPhone("");
   };
 
   return (
@@ -188,13 +178,22 @@ const ItemServico = ({ service, barbershop }: ItemServicoProps) => {
                     date={selectedDate}
                     time={selectedTime}
                   />
+
+                  <div className="mt-5 space-y-2">
+                    <p className="text-sm font-bold">Seu WhatsApp</p>
+                    <Input
+                      placeholder="(11) 99999-9999"
+                      value={customerPhone}
+                      onChange={(e) => setCustomerPhone(e.target.value)}
+                    />
+                  </div>
                 </div>
               )}
 
               <SheetFooter className="px-5 pb-6">
                 <Button
                   className="w-full"
-                  disabled={!selectedDate || !selectedTime || isCreatingBooking}
+                  disabled={!selectedDate || !selectedTime || !customerPhone || isCreatingBooking}
                   onClick={handleConfirmBooking}
                 >
                   {isCreatingBooking ? (

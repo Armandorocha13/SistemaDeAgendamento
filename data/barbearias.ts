@@ -42,3 +42,15 @@ export const obterBarbeariasPorNomeServico = async (serviceName: string) => {
   });
   return barbershops;
 };
+
+export const obterBarbeariaPrincipal = async () => {
+  const barbershop = await prisma.barbershop.findFirst({
+    where: {
+      name: "Julien Nail Designer",
+    },
+    include: {
+      services: true,
+    },
+  });
+  return barbershop;
+};
