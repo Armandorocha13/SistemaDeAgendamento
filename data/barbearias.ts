@@ -46,7 +46,7 @@ export const obterBarbeariasPorNomeServico = async (serviceName: string) => {
 export const obterBarbeariaPrincipal = async () => {
   const barbershop = await prisma.barbershop.findFirst({
     where: {
-      name: "Julien Nail Designer",
+      name: "Nail Designer",
     },
     include: {
       services: true,

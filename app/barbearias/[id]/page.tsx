@@ -8,7 +8,7 @@ import ItemServico from "@/components/item-servico";
 import BackButton from "./_components/back-button";
 import CopyButton from "./_components/copy-button";
 
-const BarbershopPage = async ({ params }: PageProps<"/barbershops/[id]">) => {
+const BarbershopPage = async ({ params }: PageProps<"/barbearias/[id]">) => {
   const { id } = await params;
   const barbershop = await obterBarbeariaPorId(id);
 

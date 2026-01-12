@@ -32,6 +32,7 @@ async function seedDatabase() {
     ];
     // Nomes criativos para as barbearias
     const creativeNames = [
+      "Nail Designer",
       "Barbearia Vintage",
       "Corte & Estilo",
       "Barba & Navalha",
@@ -46,6 +47,7 @@ async function seedDatabase() {
 
     // Endereços fictícios para as barbearias
     const addresses = [
+      "Rua da Beleza, 123",
       "Rua da Barbearia, 123",
       "Avenida dos Cortes, 456",
       "Praça da Barba, 789",
@@ -109,9 +111,9 @@ async function seedDatabase() {
       },
     ];
 
-    // Criar 10 barbearias com nomes e endereços fictícios
+    // Criar as barbearias com nomes e endereços fictícios
     const barbershops = [];
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < creativeNames.length; i++) {
       const name = creativeNames[i];
       const address = addresses[i];
       const imageUrl = images[i];

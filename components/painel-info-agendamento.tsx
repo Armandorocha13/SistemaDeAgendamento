@@ -18,7 +18,7 @@ import {
 import { BookingWithRelations } from "@/data/agendamentos";
 import { getBookingStatus } from "@/lib/booking-status";
 import ResumoAgendamento from "./resumo-agendamento";
-import CopyButton from "@/app/barbershops/[id]/_components/copy-button";
+import CopyButton from "@/app/barbearias/[id]/_components/copy-button";
 import { Avatar, AvatarImage } from "./ui/avatar";
 import { Smartphone, X, Loader2 } from "lucide-react";
 import { cancelBooking } from "@/actions/cancel-booking";

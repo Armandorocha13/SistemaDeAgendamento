@@ -115,7 +115,7 @@ const MenuSheet = () => {
             {categories.map((category) => (
               <SheetClose key={category.search} asChild>
                 <Link
-                  href={`/barbershops?search=${category.search}`}
+                  href={`/barbearias?search=${category.search}`}
                   className="px-5 py-3 text-sm font-medium"
                 >
                   {category.label}

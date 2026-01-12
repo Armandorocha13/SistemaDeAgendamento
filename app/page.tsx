@@ -41,10 +41,10 @@ export default async function Home() {
           <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-black/50 to-transparent" />
           <div className="absolute top-[80%] left-5 z-10 -translate-y-1/2">
             <h2 className="text-background font-sour text-3xl font-bold">
-              Agende com a Julien
+              Agende com as
             </h2>
             <p className="text-background text-sm">
-              Nail Designer Profissional
+              Nails Designers Profissionais
             </p>
           </div>
         </div>

@@ -17,7 +17,7 @@ const PesquisaRapida = () => {
   const handleSearch = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!searchValue.trim()) return;
-    router.push(`/barbershops?search=${encodeURIComponent(searchValue.trim())}`);
+    router.push(`/barbearias?search=${encodeURIComponent(searchValue.trim())}`);
   };
 
   return (
@@ -35,7 +35,7 @@ const PesquisaRapida = () => {
       </form>
       <RolagemSecao>
         <Link
-          href="/barbershops?search=manutenção%20de%20gel"
+          href="/barbearias?search=manutenção%20de%20gel"
           className="border-border bg-card-background flex shrink-0 items-center justify-center gap-3 rounded-3xl border px-4 py-2"
         >
           <Hand className="size-4" />
@@ -45,7 +45,7 @@ const PesquisaRapida = () => {
         </Link>
 
         <Link
-          href="/barbershops?search=esmaltação%20em%20gel"
+          href="/barbearias?search=esmaltação%20em%20gel"
           className="border-border bg-card-background flex shrink-0 items-center justify-center gap-3 rounded-3xl border px-4 py-2"
         >
           <Paintbrush className="size-4" />
@@ -55,7 +55,7 @@ const PesquisaRapida = () => {
         </Link>
 
         <Link
-          href="/barbershops?search=banho%20de%20gel"
+          href="/barbearias?search=banho%20de%20gel"
           className="border-border bg-card-background flex shrink-0 items-center justify-center gap-3 rounded-3xl border px-4 py-2"
         >
           <Droplets className="size-4" />
@@ -65,7 +65,7 @@ const PesquisaRapida = () => {
         </Link>
 
         <Link
-          href="/barbershops?search=cuticulagem"
+          href="/barbearias?search=cuticulagem"
           className="border-border bg-card-background flex shrink-0 items-center justify-center gap-3 rounded-3xl border px-4 py-2"
         >
           <Sparkles className="size-4" />
