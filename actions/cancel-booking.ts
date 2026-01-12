@@ -7,6 +7,7 @@ import { prisma } from "@/lib/prisma";
 import { isFuture } from "date-fns";
 import { revalidatePath } from "next/cache";
 import Stripe from "stripe";
+import { updateGoogleCalendarEvent } from "@/lib/google-calendar";
 
 const inputSchema = z.object({
   bookingId: z.uuid(),
@@ -71,6 +72,36 @@ export const cancelBooking = protectedActionClient
         cancelledAt: new Date(),
       },
     });
+
+    // Sincronizar com Google Calendar
+    console.log("Iniciando sincronização de cancelamento...", {
+      bookingId: booking.id,
+      hasGoogleEventId: !!booking.googleEventId,
+      googleEventId: (booking as any).googleEventId
+    });
+
+    if ((booking as any).googleEventId) {
+      try {
+        // Buscamos o serviço para ter o nome no título cancelado
+        const service = await prisma.barbershopService.findUnique({
+          where: { id: booking.serviceId },
+          include: { barbershop: true },
+        });
+
+        console.log("Atualizando evento no Google Calendar:", (booking as any).googleEventId);
+
+        await updateGoogleCalendarEvent((booking as any).googleEventId, {
+          summary: `[CANCELADO] ${service?.name} - ${service?.barbershop.name}`,
+        });
+
+        console.log("Evento atualizado com sucesso!");
+      } catch (error) {
+        console.error("Erro ao atualizar evento do Google Calendar:", error);
+      }
+    } else {
+      console.warn("Nenhum googleEventId encontrado para este agendamento.");
+    }
+
     revalidatePath("/");
     revalidatePath("/bookings");
     return cancelledBooking;
