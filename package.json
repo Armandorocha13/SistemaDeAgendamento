@@ -13,6 +13,7 @@
   "dependencies": {
     "@ai-sdk/openai": "2.0.85",
     "@ai-sdk/react": "2.0.114",
+    "@prisma/adapter-better-sqlite3": "^7.8.0",
     "@prisma/adapter-pg": "7.1.0",
     "@prisma/client": "7.1.0",
     "@radix-ui/react-alert-dialog": "^1.1.15",
@@ -24,10 +25,12 @@
     "@tanstack/react-query": "5.90.12",
     "ai": "5.0.112",
     "better-auth": "1.4.6",
+    "better-sqlite3": "^12.10.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "dotenv": "17.2.3",
+    "framer-motion": "^12.40.0",
     "googleapis": "^170.0.0",
     "lucide-react": "0.561.0",
     "next": "16.0.10",
@@ -46,6 +49,7 @@
     "zod": "4.1.13"
   },
   "devDependencies": {
+    "@prisma/client-runtime-utils": "^7.8.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^24.10.3",
     "@types/react": "^19",

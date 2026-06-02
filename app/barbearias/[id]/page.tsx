@@ -85,7 +85,7 @@ const BarbershopPage = async ({ params }: PageProps<"/barbearias/[id]">) => {
         {/* Contato */}
         <div className="flex flex-col gap-3 px-5">
           <TituloSecao>Contato</TituloSecao>
-          {barbershop.phones.map((phone, index) => (
+          {(barbershop.phones ? barbershop.phones.split(",") : []).map((phone, index) => (
             <div key={index} className="flex items-center justify-between">
               <div className="flex items-center gap-2.5">
                 <Smartphone className="size-6" />

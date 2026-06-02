@@ -1,12 +1,19 @@
-import { PrismaClient } from "../generated/prisma/client";
-import { PrismaPg } from "@prisma/adapter-pg";
+import { PrismaClient } from "@prisma/client";
+import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
 
-const prisma = new PrismaClient({
-  adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL }),
+const adapter = new PrismaBetterSqlite3({
+  url: process.env.DATABASE_URL || "file:./dev.db"
 });
+const prisma = new PrismaClient({ adapter });
 
 async function seedDatabase() {
   try {
+    // Limpar o banco de dados antes de semear
+    await prisma.booking.deleteMany();
+    await prisma.barbershopService.deleteMany();
+    await prisma.barbershop.deleteMany();
+    await prisma.user.deleteMany();
+
     const images = [
       "https://utfs.io/f/c97a2dc9-cf62-468b-a851-bfd2bdde775f-16p.png",
       "https://utfs.io/f/45331760-899c-4b4b-910e-e00babb6ed81-16q.png",
@@ -32,7 +39,7 @@ async function seedDatabase() {
     ];
     // Nomes criativos para as barbearias
     const creativeNames = [
-      "Nail Designer",
+      "The Nails By Julien",
       "Barbearia Vintage",
       "Corte & Estilo",
       "Barba & Navalha",
@@ -47,7 +54,7 @@ async function seedDatabase() {
 
     // Endereços fictícios para as barbearias
     const addresses = [
-      "Rua da Beleza, 123",
+      "Avenida da Moda, 123 - Centro",
       "Rua da Barbearia, 123",
       "Avenida dos Cortes, 456",
       "Praça da Barba, 789",
@@ -62,54 +69,122 @@ async function seedDatabase() {
 
     const services = [
       {
-        name: "Manutenção de Gel",
-        description: "Ajuste e reforço das extensões em gel.",
-        price: 120.0,
-        imageUrl:
-          "https://utfs.io/f/0ddfbd26-a424-43a0-aaf3-c3f1dc6be6d1-1kgxo7.png",
+        name: "Alongamento P, M (F1/Tip)",
+        description: "Alongamento nos tamanhos P ou M com Molde F1 ou Tip, decorada com francesinha e brilhos.",
+        price: 110.0,
+        imageUrl: "https://utfs.io/f/0ddfbd26-a424-43a0-aaf3-c3f1dc6be6d1-1kgxo7.png",
+        durationInMinutes: 180,
+      },
+      {
+        name: "Alongamento G (F1/Tip)",
+        description: "Alongamento tamanho G com Molde F1 ou Tips.",
+        price: 130.0,
+        imageUrl: "https://utfs.io/f/0ddfbd26-a424-43a0-aaf3-c3f1dc6be6d1-1kgxo7.png",
+        durationInMinutes: 180,
+      },
+      {
+        name: "Manutenção (Até 30 dias)",
+        description: "Manutenção de alongamento realizada em até 30 dias.",
+        price: 100.0,
+        imageUrl: "https://utfs.io/f/0ddfbd26-a424-43a0-aaf3-c3f1dc6be6d1-1kgxo7.png",
         durationInMinutes: 120,
       },
       {
-        name: "Esmaltação em Gel",
-        description: "Aplicação de esmalte em gel com acabamento duradouro.",
-        price: 90.0,
-        imageUrl:
-          "https://utfs.io/f/e6bdffb6-24a9-455b-aba3-903c2c2b5bde-1jo6tu.png",
+        name: "Banho de Gel (Francesinha/Glitters)",
+        description: "Banho de gel com francesinhas e glitters.",
+        price: 100.0,
+        imageUrl: "https://utfs.io/f/8a457cda-f768-411d-a737-cdb23ca6b9b5-b3pegf.png",
         durationInMinutes: 90,
       },
       {
-        name: "Banho de Gel",
-        description: "Camada protetora para fortalecimento das unhas.",
-        price: 80.0,
-        imageUrl:
-          "https://utfs.io/f/8a457cda-f768-411d-a737-cdb23ca6b9b5-b3pegf.png",
-        durationInMinutes: 60,
-      },
-      {
-        name: "Cuticulagem",
-        description: "Remoção cuidadosa das cutículas com técnica precisa.",
-        price: 50.0,
-        imageUrl:
-          "https://utfs.io/f/2118f76e-89e4-43e6-87c9-8f157500c333-b0ps0b.png",
-        durationInMinutes: 60,
-      },
-      {
-        name: "Blindagem",
-        description: "Proteção extra para unhas frágeis com acabamento elegante.",
+        name: "Banho de Gel c/ Encapsulado",
+        description: "Banho de gel com técnica de encapsulamento.",
         price: 110.0,
-        imageUrl:
-          "https://utfs.io/f/c4919193-a675-4c47-9f21-ebd86d1c8e6a-4oen2a.png",
+        imageUrl: "https://utfs.io/f/8a457cda-f768-411d-a737-cdb23ca6b9b5-b3pegf.png",
+        durationInMinutes: 120,
+      },
+      {
+        name: "Manutenção Banho de Gel",
+        description: "Manutenção do banho de gel.",
+        price: 70.0,
+        imageUrl: "https://utfs.io/f/8a457cda-f768-411d-a737-cdb23ca6b9b5-b3pegf.png",
+        durationInMinutes: 60,
+      },
+      {
+        name: "Esmaltação em Gel (Mão)",
+        description: "Esmaltação em gel nas mãos com direito a francesinha e brilho.",
+        price: 60.0,
+        imageUrl: "https://utfs.io/f/e6bdffb6-24a9-455b-aba3-903c2c2b5bde-1jo6tu.png",
+        durationInMinutes: 60,
+      },
+      {
+        name: "Esmaltação em Gel (Pé)",
+        description: "Esmaltação em gel nos pés com direito a francesinha e brilho.",
+        price: 60.0,
+        imageUrl: "https://utfs.io/f/e6bdffb6-24a9-455b-aba3-903c2c2b5bde-1jo6tu.png",
+        durationInMinutes: 60,
+      },
+      {
+        name: "Esmaltação em Gel (Pé e Mão)",
+        description: "Esmaltação em gel completa (pé e mão) com francesinha e detalhes com brilho.",
+        price: 100.0,
+        imageUrl: "https://utfs.io/f/e6bdffb6-24a9-455b-aba3-903c2c2b5bde-1jo6tu.png",
+        durationInMinutes: 120,
+      },
+      {
+        name: "Blindagem Diamante",
+        description: "Proteção extra e brilho intenso para suas unhas.",
+        price: 70.0,
+        imageUrl: "https://utfs.io/f/c4919193-a675-4c47-9f21-ebd86d1c8e6a-4oen2a.png",
+        durationInMinutes: 60,
+      },
+      {
+        name: "Postiça Realista",
+        description: "Aplicação de unhas postiças com acabamento natural.",
+        price: 60.0,
+        imageUrl: "https://utfs.io/f/2118f76e-89e4-43e6-87c9-8f157500c333-b0ps0b.png",
         durationInMinutes: 90,
       },
       {
-        name: "Spa das Mãos",
-        description: "Tratamento relaxante e hidratante para as mãos.",
-        price: 70.0,
-        imageUrl:
-          "https://utfs.io/f/8a457cda-f768-411d-a737-cdb23ca6b9b5-b3pegf.png",
+        name: "Nail Art Nível 1 - Criativa",
+        description: "Degradês ou artes com detalhes em todos os dedos.",
+        price: 30.0,
+        imageUrl: "https://utfs.io/f/5832df58-cfd7-4b3f-b102-42b7e150ced2-16r.png",
+        durationInMinutes: 30,
+      },
+      {
+        name: "Nail Art Nível 2 - Master Art",
+        description: "Desenhos à mão livre, personagens, pedrarias luxo ou efeito 3D.",
+        price: 75.0,
+        imageUrl: "https://utfs.io/f/5832df58-cfd7-4b3f-b102-42b7e150ced2-16r.png",
         durationInMinutes: 60,
+      },
+      {
+        name: "Reposição de Unha",
+        description: "Reposição individual de unha.",
+        price: 10.0,
+        imageUrl: "https://utfs.io/f/0ddfbd26-a424-43a0-aaf3-c3f1dc6be6d1-1kgxo7.png",
+        durationInMinutes: 30,
+      },
+      {
+        name: "Remoção com Tratamento",
+        description: "Remoção segura do alongamento acompanhada de tratamento para as unhas naturais.",
+        price: 30.0,
+        imageUrl: "https://utfs.io/f/2118f76e-89e4-43e6-87c9-8f157500c333-b0ps0b.png",
+        durationInMinutes: 45,
       },
     ];
+
+    // Criar o usuário mockado para integridade referencial
+    await prisma.user.create({
+      data: {
+        id: "user-123",
+        name: "Cliente Teste",
+        email: "cliente.teste@example.com",
+        emailVerified: true,
+        image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop",
+      }
+    });
 
     // Criar as barbearias com nomes e endereços fictícios
     const barbershops = [];
@@ -123,9 +198,9 @@ async function seedDatabase() {
           name,
           address,
           imageUrl: imageUrl,
-          phones: ["(11) 99999-9999", "(11) 99999-9999"],
+          phones: "(11) 99999-9999,(11) 99999-9999",
           description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ac augue ullamcorper, pharetra orci mollis, auctor tellus. Phasellus pharetra erat ac libero efficitur tempus. Donec pretium convallis iaculis. Etiam eu felis sollicitudin, cursus mi vitae, iaculis magna. Nam non erat neque. In hac habitasse platea dictumst. Pellentesque molestie accumsan tellus id laoreet.",
+            "Especialista em Alongamentos e Nail Art Artística. Oferecemos técnicas de longa duração e alta performance para garantir a perfeição de cada detalhe.",
         },
       });
 

@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
-import { Prisma } from "@/generated/prisma/client";
+import { Prisma } from "@prisma/client";
 
 // Tipo auxiliar de agendamento com relações carregadas
 export type BookingWithRelations = Prisma.BookingGetPayload<{

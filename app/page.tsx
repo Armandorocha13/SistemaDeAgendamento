@@ -1,5 +1,4 @@
 import Cabecalho from "@/components/cabecalho";
-import Image from "next/image";
 import ItemAgendamento from "@/components/item-agendamento";
 import { obterAgendamentosUsuario } from "@/data/agendamentos";
 import {
@@ -12,8 +11,8 @@ import Rodape from "@/components/rodape";
 import { obterBarbeariaPrincipal } from "@/data/barbearias";
 import ItemServico from "@/components/item-servico";
 import { notFound } from "next/navigation";
-import banner from "@/public/banner-unha.png";
 import PesquisaRapida from "@/components/pesquisa-rapida";
+import BannerCarrossel from "@/components/banner-carrossel";
 
 export default async function Home() {
   const barbershop = await obterBarbeariaPrincipal();
@@ -30,24 +29,7 @@ export default async function Home() {
       <ContainerPagina>
         <PesquisaRapida />
 
-        {/* Banner Original Style */}
-        <div className="relative w-full overflow-hidden rounded-2xl">
-          <Image
-            src={banner}
-            alt="Agende com Nail Designers"
-            sizes="100vw"
-            className="h-auto w-full object-cover"
-          />
-          <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-black/50 to-transparent" />
-          <div className="absolute top-[80%] left-5 z-10 -translate-y-1/2">
-            <h2 className="text-background font-sour text-3xl font-bold">
-              Agende com as
-            </h2>
-            <p className="text-background text-sm">
-              Nails Designers Profissionais
-            </p>
-          </div>
-        </div>
+        <BannerCarrossel />
 
         {/* Agendamentos */}
         {confirmedBookings.length > 0 && (

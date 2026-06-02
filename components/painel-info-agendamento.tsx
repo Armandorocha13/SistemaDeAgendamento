@@ -95,9 +95,9 @@ const BookingInfoSheet = ({ booking, onClose }: BookingInfoSheetProps) => {
           />
         </div>
 
-        {booking.barbershop.phones.length > 0 && (
+        {booking.barbershop.phones && (
           <div className="flex flex-col gap-3">
-            {booking.barbershop.phones.map((phone, index) => (
+            {(booking.barbershop.phones ? booking.barbershop.phones.split(",") : []).map((phone, index) => (
               <div
                 key={`${phone}-${index}`}
                 className="flex items-center justify-between"
