@@ -1,7 +1,7 @@
 import Cabecalho from "@/components/cabecalho";
 import Rodape from "@/components/rodape";
-import ItemBarbearia from "@/components/item-barbearia";
-import { obterBarbeariasPorNomeServico } from "@/data/barbearias";
+import ItemServico from "@/components/item-servico";
+import { obterBarbeariaPrincipal } from "@/data/barbearias";
 import {
   ContainerPagina,
   ConteudoSecao,
@@ -16,7 +16,11 @@ interface BarbershopsPageProps {
 
 const BarbershopsPage = async ({ searchParams }: BarbershopsPageProps) => {
   const { search } = await searchParams;
-  const barbearias = search ? await obterBarbeariasPorNomeServico(search) : [];
+  const barbershop = await obterBarbeariaPrincipal();
+  
+  const services = barbershop?.services.filter(s => 
+    search ? s.name.toLowerCase().includes(search.toLowerCase()) : true
+  ) || [];
 
   return (
     <div>
@@ -24,16 +28,16 @@ const BarbershopsPage = async ({ searchParams }: BarbershopsPageProps) => {
       <ContainerPagina>
         <ConteudoSecao>
           <TituloSecao>
-            Resultados de Nail Design para &quot;{search || ""}&quot;
+            Resultados para &quot;{search || ""}&quot;
           </TituloSecao>
-          {barbearias.length === 0 ? (
+          {services.length === 0 ? (
             <p className="text-muted-foreground text-sm">
-              Nenhuma barbearia encontrada.
+              Nenhum serviço encontrado.
             </p>
           ) : (
-            <div className="grid grid-cols-1 gap-4">
-              {barbearias.map((barbershop) => (
-                <ItemBarbearia key={barbershop.id} barbershop={barbershop} />
+            <div className="flex flex-col gap-3">
+              {services.map((service) => (
+                <ItemServico key={service.id} service={service} barbershop={barbershop!} />
               ))}
             </div>
           )}

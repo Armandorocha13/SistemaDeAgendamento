@@ -1,6 +1,4 @@
 // lib/auth.ts
-import { cookies } from "next/headers";
-
 const mockUser = {
   id: "user-123",
   name: "Cliente Teste",
@@ -12,23 +10,18 @@ const mockUser = {
 export const auth = {
   api: {
     async getSession(options?: any) {
-      const cookieStore = await cookies();
-      const isLoggedIn = cookieStore.get("mock_user_logged_in")?.value !== "false";
-
-      if (isLoggedIn) {
-        return {
-          user: mockUser,
-          session: {
-            id: "sess-123",
-            expiresAt: new Date(Date.now() + 86400000),
-            token: "sess-token",
-            createdAt: new Date(),
-            updatedAt: new Date(),
-            userId: "user-123",
-          }
-        };
-      }
-      return null;
+      return {
+        user: mockUser,
+        session: {
+          id: "sess-123",
+          expiresAt: new Date(Date.now() + 86400000),
+          token: "sess-token",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          userId: "user-123",
+        }
+      };
     }
   }
 } as any;
+

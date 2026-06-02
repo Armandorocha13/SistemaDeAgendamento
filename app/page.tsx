@@ -13,6 +13,7 @@ import ItemServico from "@/components/item-servico";
 import { notFound } from "next/navigation";
 import PesquisaRapida from "@/components/pesquisa-rapida";
 import BannerCarrossel from "@/components/banner-carrossel";
+import Link from "next/link";
 
 export default async function Home() {
   const barbershop = await obterBarbeariaPrincipal();
@@ -44,10 +45,13 @@ export default async function Home() {
         )}
 
         {/* Serviços (Substituindo listas de barbearias) */}
-        <ConteudoSecao>
-          <TituloSecao>Serviços Disponíveis</TituloSecao>
+        <ConteudoSecao id="servicos">
+          <div className="flex items-center justify-between">
+            <TituloSecao>Serviços Disponíveis</TituloSecao>
+            <Link href="/barbearias" className="text-xs font-bold text-primary hover:underline">Ver todos</Link>
+          </div>
           <div className="flex flex-col gap-3">
-            {barbershop.services.map((service) => (
+            {barbershop.services.slice(0, 5).map((service) => (
               <ItemServico
                 key={service.id}
                 service={service}
@@ -61,7 +65,7 @@ export default async function Home() {
         <ConteudoSecao>
           <TituloSecao>Sobre Mim</TituloSecao>
           <div className="bg-card p-4 rounded-xl border border-secondary shadow-sm">
-            <p className="text-sm text-gray-500">{barbershop.description}</p>
+            <p className="text-sm text-muted-foreground">{barbershop.description}</p>
           </div>
         </ConteudoSecao>
 

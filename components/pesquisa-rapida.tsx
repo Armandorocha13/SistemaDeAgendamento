@@ -35,22 +35,22 @@ const PesquisaRapida = () => {
       </form>
       <RolagemSecao>
         <Link
-          href="/barbearias?search=manutenção%20de%20gel"
+          href="/barbearias?search=alongamento"
           className="border-border bg-card-background flex shrink-0 items-center justify-center gap-3 rounded-3xl border px-4 py-2"
         >
           <Hand className="size-4" />
           <span className="text-card-foreground text-sm font-medium">
-            Manutenção de Gel
+            Alongamento
           </span>
         </Link>
 
         <Link
-          href="/barbearias?search=esmaltação%20em%20gel"
+          href="/barbearias?search=manutenção"
           className="border-border bg-card-background flex shrink-0 items-center justify-center gap-3 rounded-3xl border px-4 py-2"
         >
           <Paintbrush className="size-4" />
           <span className="text-card-foreground text-sm font-medium">
-            Esmaltação em Gel
+            Manutenção
           </span>
         </Link>
 
@@ -65,12 +65,12 @@ const PesquisaRapida = () => {
         </Link>
 
         <Link
-          href="/barbearias?search=cuticulagem"
+          href="/barbearias?search=esmaltação"
           className="border-border bg-card-background flex shrink-0 items-center justify-center gap-3 rounded-3xl border px-4 py-2"
         >
           <Sparkles className="size-4" />
           <span className="text-card-foreground text-sm font-medium">
-            Cuticulagem
+            Esmaltação
           </span>
         </Link>
       </RolagemSecao>

@@ -15,10 +15,12 @@ export const TituloSecao = ({
 // Conteúdo da seção
 export const ConteudoSecao = ({
   children,
+  id,
 }: {
   children: React.ReactNode;
+  id?: string;
 }) => {
-  return <div className="space-y-3">{children}</div>;
+  return <div id={id} className="space-y-3">{children}</div>;
 };
 
 // Rolagem horizontal da seção

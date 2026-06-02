@@ -46,6 +46,7 @@ export default function RootLayout({
     <html lang="pt-BR" suppressHydrationWarning>
       <body
         className={`${plusJakartaSans.variable} ${prata.variable} ${playfairDisplay.variable} ${josefinSans.variable} ${ananda.variable} antialiased`}
+        suppressHydrationWarning
       >
         <TanstackQueryProvider>
           {children}
