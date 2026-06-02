@@ -18,7 +18,10 @@ const Cabecalho = () => {
             className="object-cover"
           />
         </div>
-        <h2 className="font-bold text-lg">The Nails By Julien</h2>
+        <div className="flex items-baseline gap-2">
+          <h2 className="font-bold text-base md:text-lg leading-none font-safira tracking-tight">The Nails</h2>
+          <span className="font-signature text-primary text-[1.2rem] leading-none drop-shadow-sm">By Julien</span>
+        </div>
       </Link>
       <div className="flex items-center gap-2">
         <Link href="/chat">

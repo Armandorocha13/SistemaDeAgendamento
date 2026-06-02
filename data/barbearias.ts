@@ -34,7 +34,6 @@ export const obterBarbeariasPorNomeServico = async (serviceName: string) => {
         some: {
           name: {
             contains: serviceName,
-            mode: "insensitive",
           },
         },
       },

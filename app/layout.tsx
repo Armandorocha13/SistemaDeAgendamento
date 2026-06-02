@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Merriweather, Plus_Jakarta_Sans } from "next/font/google";
+import { Plus_Jakarta_Sans, Playfair_Display, Josefin_Sans, Prata } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import { TanstackQueryProvider } from "@/providers/tanstack-query";
@@ -9,11 +10,25 @@ const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
 });
 
-const merriweather = Merriweather({
-  variable: "--font-merriweather",
+const prata = Prata({
+  variable: "--font-prata",
   subsets: ["latin"],
   weight: ["400"],
-  style: ["italic"],
+});
+
+const playfairDisplay = Playfair_Display({
+  variable: "--font-playfair-display",
+  subsets: ["latin"],
+});
+
+const josefinSans = Josefin_Sans({
+  variable: "--font-josefin-sans",
+  subsets: ["latin"],
+});
+
+const ananda = localFont({
+  src: "../public/fonts/ananda.ttf",
+  variable: "--font-ananda",
 });
 
 // Metadados da aplicação
@@ -30,7 +45,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" suppressHydrationWarning>
       <body
-        className={`${plusJakartaSans.variable} ${merriweather.variable} antialiased`}
+        className={`${plusJakartaSans.variable} ${prata.variable} ${playfairDisplay.variable} ${josefinSans.variable} ${ananda.variable} antialiased`}
       >
         <TanstackQueryProvider>
           {children}

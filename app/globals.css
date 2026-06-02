@@ -5,6 +5,14 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@font-face {
+  font-family: 'Ananda';
+  src: url('/fonts/ananda.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --background: oklch(0.9779 0.0042 56.3756);
   --foreground: oklch(0.2178 0 0);
@@ -41,6 +49,10 @@
   --font-sans: Poppins, sans-serif;
   --font-serif: Libre Baskerville, serif;
   --font-mono: IBM Plex Mono, monospace;
+  --font-safira: var(--font-prata);
+  --font-josefin: var(--font-josefin-sans);
+  --font-signature: 'Ananda', cursive;
+  --font-playfair: var(--font-playfair-display);
   --radius: 0.375rem;
   --shadow-x: 1px;
   --shadow-y: 1px;
@@ -92,7 +104,11 @@
   --sidebar-accent: oklch(0.5553 0.1455 48.9975);
   --sidebar-accent-foreground: oklch(0.9619 0.0580 95.6174);
   --sidebar-border: oklch(0.3741 0.0087 67.5582);
-  --sidebar-ring: oklch(0.5054 0.1905 27.5181);
+  --font-sidebar-ring: oklch(0.5054 0.1905 27.5181);
+  --font-safira: var(--font-prata);
+  --font-josefin: var(--font-josefin-sans);
+  --font-signature: 'Ananda', cursive;
+  --font-playfair: var(--font-playfair-display);
   --font-sans: Poppins, sans-serif;
   --font-serif: Libre Baskerville, serif;
   --font-mono: IBM Plex Mono, monospace;
@@ -150,6 +166,11 @@
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
   --font-serif: var(--font-serif);
+  
+  --font-safira: var(--font-safira);
+  --font-josefin: var(--font-josefin);
+  --font-signature: var(--font-signature);
+  --font-playfair: var(--font-playfair);
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);

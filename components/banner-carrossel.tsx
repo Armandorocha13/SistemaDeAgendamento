@@ -76,13 +76,18 @@ const BannerCarrossel = () => {
           transition={{ delay: 0.5, duration: 0.8 }}
           className="flex flex-col gap-0"
         >
-          <span className="text-primary font-medium tracking-[0.4em] uppercase text-[9px] mb-2">
+          <span className="text-primary font-josefin font-semibold tracking-[0.4em] uppercase text-[9px] mb-2">
             Expert Nail Design
           </span>
-          <h2 className="text-white font-sour text-3xl md:text-5xl font-bold leading-none drop-shadow-md">
-            The Nails <span className="text-white/80 font-light italic ml-2">By Julien</span>
-          </h2>
-          <p className="text-white/60 text-[11px] md:text-xs font-light tracking-wide mt-3 max-w-sm">
+          <div className="flex items-baseline gap-3 md:gap-4 relative">
+            <h2 className="text-white text-3xl md:text-4xl font-bold leading-none drop-shadow-md z-10">
+              <span className="font-safira tracking-tight">The Nails</span>
+            </h2>
+            <span className="font-signature text-primary text-[2rem] md:text-[3rem] leading-[1] drop-shadow-lg z-20">
+              By Julien
+            </span>
+          </div>
+          <p className="text-white/60 font-josefin text-[11px] md:text-xs font-light tracking-widest mt-3 max-w-sm uppercase">
             Alongamentos e Nail Art Artística de alta performance.
           </p>
         </motion.div>
