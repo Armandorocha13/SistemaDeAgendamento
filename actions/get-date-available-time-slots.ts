@@ -29,6 +29,7 @@ const TIME_SLOTS = [
   "16:00",
   "16:30",
   "17:00",
+  "18:00",
 ];
 
 export const getDateAvailableTimeSlots = actionClient
