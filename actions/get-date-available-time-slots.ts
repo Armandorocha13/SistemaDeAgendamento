@@ -51,6 +51,9 @@ export const getDateAvailableTimeSlots = actionClient
         service: true,
       },
     });
+    if (bookings.length >= 3) {
+      return [];
+    }
     const occupiedIntervals = bookings.map((booking) => {
       const start = booking.date;
       const duration = booking.service?.durationInMinutes ?? 60;

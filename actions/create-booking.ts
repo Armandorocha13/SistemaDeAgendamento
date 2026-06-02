@@ -5,7 +5,7 @@ import { protectedActionClient } from "@/lib/action-client";
 import { returnValidationErrors } from "next-safe-action";
 import { prisma } from "@/lib/prisma";
 import { isPast } from "date-fns";
-import { createGoogleCalendarEvent } from "@/lib/google-calendar";
+
 
 // This schema is used to validate input from client.
 const inputSchema = z.object({
@@ -71,6 +71,13 @@ export const createBooking = protectedActionClient
       },
       include: { service: true },
     });
+    if (sameDayBookings.length >= 3) {
+      returnValidationErrors(inputSchema, {
+        _errors: [
+          "Limite de agendamentos atingido para este dia. Por favor, escolha outra data.",
+        ],
+      });
+    }
     const overlaps = sameDayBookings.some((booking) => {
       const start = booking.date;
       const end = new Date(
@@ -93,29 +100,6 @@ export const createBooking = protectedActionClient
         customerPhone,
       },
     });
-
-    // Sincronizar com Google Calendar
-    try {
-      const end = new Date(
-        date.getTime() + (service.durationInMinutes ?? 60) * 60 * 1000,
-      );
-      const googleEvent = await createGoogleCalendarEvent({
-        summary: `${service.name} - ${service.barbershop.name}`,
-        description: `Agendamento realizado por ${user.name} (${customerPhone})`,
-        start: date,
-        end: end,
-      });
-
-      if (googleEvent?.id) {
-        await prisma.booking.update({
-          where: { id: booking.id },
-          data: { googleEventId: googleEvent.id },
-        });
-      }
-    } catch (error) {
-      console.error("Erro ao sincronizar com Google Calendar:", error);
-      // Não falhamos a reserva se o calendário falhar, mas logamos o erro.
-    }
 
     return booking;
   });

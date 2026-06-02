@@ -1,10 +1,7 @@
 import Cabecalho from "@/components/cabecalho";
-import ItemAgendamento from "@/components/item-agendamento";
-import { obterAgendamentosUsuario } from "@/data/agendamentos";
 import {
   ContainerPagina,
   ConteudoSecao,
-  RolagemSecao,
   TituloSecao,
 } from "@/components/ui/page";
 import Rodape from "@/components/rodape";
@@ -22,8 +19,6 @@ export default async function Home() {
     return notFound();
   }
 
-  const { confirmedBookings } = await obterAgendamentosUsuario();
-
   return (
     <div>
       <Cabecalho />
@@ -32,17 +27,6 @@ export default async function Home() {
 
         <BannerCarrossel />
 
-        {/* Agendamentos */}
-        {confirmedBookings.length > 0 && (
-          <ConteudoSecao>
-            <TituloSecao>Agendamentos</TituloSecao>
-            <RolagemSecao>
-              {confirmedBookings.map((booking) => (
-                <ItemAgendamento key={booking.id} booking={booking} />
-              ))}
-            </RolagemSecao>
-          </ConteudoSecao>
-        )}
 
         {/* Serviços (Substituindo listas de barbearias) */}
         <ConteudoSecao id="servicos">

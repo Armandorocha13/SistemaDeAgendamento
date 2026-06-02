@@ -83,7 +83,27 @@ const ItemServico = ({ service, barbershop }: ItemServicoProps) => {
       );
     }
 
-    toast.success("Reserva realizada com sucesso!");
+    toast.success("Reserva realizada com sucesso! Redirecionando para o WhatsApp...");
+    
+    const formattedDate = date.toLocaleDateString("pt-BR", {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+    const formattedPrice = formatarMoeda(service.priceInCents);
+
+    const message = `Olá! Gostaria de confirmar meu agendamento:
+*Serviço:* ${service.name}
+*Data:* ${formattedDate}
+*Horário:* ${selectedTime}
+*Valor:* ${formattedPrice}
+*WhatsApp do Cliente:* ${customerPhone}`;
+
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/5521991498444?text=${encodedMessage}`;
+    window.open(whatsappUrl, "_blank");
+
     setSheetIsOpen(false);
     setSelectedDate(undefined);
     setSelectedTime(undefined);
@@ -155,16 +175,24 @@ const ItemServico = ({ service, barbershop }: ItemServicoProps) => {
               {/* Time Selection */}
               {selectedDate && (
                 <div className="border-border flex gap-3 overflow-x-auto border-b px-5 py-6 [&::-webkit-scrollbar]:hidden">
-                  {availableTimeSlots?.data?.map((time) => (
-                    <Button
-                      key={time}
-                      variant={selectedTime === time ? "default" : "outline"}
-                      className="rounded-full"
-                      onClick={() => handleTimeSelect(time)}
-                    >
-                      {time}
-                    </Button>
-                  ))}
+                  {availableTimeSlots?.data && availableTimeSlots.data.length > 0 ? (
+                    availableTimeSlots.data.map((time) => (
+                      <Button
+                        key={time}
+                        variant={selectedTime === time ? "default" : "outline"}
+                        className="rounded-full"
+                        onClick={() => handleTimeSelect(time)}
+                      >
+                        {time}
+                      </Button>
+                    ))
+                  ) : (
+                    <p className="text-sm text-muted-foreground text-center w-full py-2">
+                      {availableTimeSlots?.data 
+                        ? "Limite de agendamentos atingido para este dia. Selecione outra data."
+                        : "Carregando horários..."}
+                    </p>
+                  )}
                 </div>
               )}
 
