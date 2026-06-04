@@ -10,12 +10,12 @@ const Cabecalho = () => {
   return (
     <header className="bg-background flex items-center justify-between px-5 py-6">
       <Link href="/" className="flex items-center gap-2">
-        <div className="relative size-10 overflow-hidden rounded-full border border-primary/20">
+        <div className="relative h-10 w-10 overflow-hidden">
           <Image
-            src="/fotos/logoJu.jpeg"
+            src="/logo.png"
             alt="Logo The Nails By Julien"
             fill
-            className="object-cover"
+            className="object-contain"
           />
         </div>
         <div className="flex items-baseline gap-2">
