@@ -1,4 +1,5 @@
 import Cabecalho from "@/components/cabecalho";
+import TelaIntro from "@/components/tela-intro";
 import {
   ContainerPagina,
   ConteudoSecao,
@@ -21,6 +22,7 @@ export default async function Home() {
 
   return (
     <div>
+      <TelaIntro />
       <Cabecalho />
       <ContainerPagina>
         <PesquisaRapida />
