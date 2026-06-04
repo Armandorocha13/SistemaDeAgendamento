@@ -14,7 +14,16 @@ import {
 } from "./ui/sheet";
 import { Calendar } from "./ui/calendar";
 import { ptBR } from "date-fns/locale";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "./ui/alert-dialog";
 import { useAction } from "next-safe-action/hooks";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
@@ -36,6 +45,7 @@ const ItemServico = ({ service, barbershop }: ItemServicoProps) => {
   );
   const [customerPhone, setCustomerPhone] = useState("");
   const [sheetIsOpen, setSheetIsOpen] = useState(false);
+  const [showLimitModal, setShowLimitModal] = useState(false);
 
   const { executeAsync: executeCreateBooking, isPending: isCreatingBooking } =
     useAction(createBooking);
@@ -47,6 +57,12 @@ const ItemServico = ({ service, barbershop }: ItemServicoProps) => {
     serviceId: service.id,
     date: selectedDate,
   });
+
+  useEffect(() => {
+    if (selectedDate && availableTimeSlots?.data && availableTimeSlots.data.length === 0) {
+      setShowLimitModal(true);
+    }
+  }, [selectedDate, availableTimeSlots?.data]);
 
   const handleDateSelect = (date: Date | undefined) => {
     setSelectedDate(date);
@@ -235,6 +251,23 @@ const ItemServico = ({ service, barbershop }: ItemServicoProps) => {
           </Sheet>
         </div>
       </div>
+
+      <AlertDialog open={showLimitModal} onOpenChange={setShowLimitModal}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Data Indisponível</AlertDialogTitle>
+            <AlertDialogDescription>
+              O limite máximo de agendamentos já foi atingido para este dia. Por favor, selecione uma data diferente para fazer a sua reserva!
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction onClick={() => {
+              setShowLimitModal(false);
+              setSelectedDate(undefined);
+            }}>Escolher outra data</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };
